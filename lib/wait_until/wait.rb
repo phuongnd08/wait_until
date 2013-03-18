@@ -23,6 +23,10 @@ module WaitUntil
         end
       end
 
+      def until_false!(description, &block)
+        until_true!(description) { !block.call }
+      end
+
       def until!(description, &block)
         until_true!(description) do
           block.call

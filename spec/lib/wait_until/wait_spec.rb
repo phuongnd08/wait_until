@@ -12,7 +12,7 @@ describe WaitUntil::Wait do
     describe "when the block returns true" do
 
       it "should execute without error" do
-        lambda { WaitUntil::Wait.until_true!("some description") { true } }.should_not raise_error
+        lambda { WaitUntil::Wait.until_true!("some operation") { true } }.should_not raise_error
       end
 
     end
@@ -45,32 +45,32 @@ describe WaitUntil::Wait do
 
   describe ".until_false!" do
 
-    describe "when the block returns true" do
+    describe "when the block returns false" do
 
       it "should execute without error" do
-        lambda { WaitUntil::Wait.until_true!("some description") { true } }.should_not raise_error
+        lambda { WaitUntil::Wait.until_false!("some operation") { false } }.should_not raise_error
       end
 
     end
 
-    describe "when the blocks always returns false" do
+    describe "when the blocks always returns true" do
 
       it "should raise an error indicating the operation timed-out" do
         lambda do
-          WaitUntil::Wait.until_true!("another operation finishes") { false }
+          WaitUntil::Wait.until_false!("another operation finishes") { true }
         end.should raise_error(/Timed-out waiting until 'another operation finishes'/i)
       end
 
     end
 
-    describe "when the block eventually returns true" do
+    describe "when the block eventually returns false" do
 
       it "should execute without error" do
         invocation_count = 0
         lambda do
-          WaitUntil::Wait.until_true!("some operation") do
+          WaitUntil::Wait.until_false!("some operation") do
             invocation_count += 1
-            invocation_count == 3
+            invocation_count < 3
           end
         end.should_not raise_error
       end
@@ -84,7 +84,7 @@ describe WaitUntil::Wait do
     describe "when the block executes without error" do
 
       it "should execute without error" do
-        lambda { WaitUntil::Wait.until!("some description") { } }.should_not raise_error
+        lambda { WaitUntil::Wait.until!("some operation") { } }.should_not raise_error
       end
 
     end
