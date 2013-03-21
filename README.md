@@ -33,4 +33,9 @@ Usage
 Requirements
 ------------
 
-* Ruby 1.9.3
+* Ruby 1.9
+
+Build Status
+------------
+
+[![Build Status](https://travis-ci.org/MYOB-Technology/wait_until.png)](https://travis-ci.org/MYOB-Technology/wait_until)
