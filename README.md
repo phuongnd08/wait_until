@@ -22,8 +22,8 @@ An alternative to the ```wait``` gem with a focus on readability via:
 Status
 ------
 
-[![Gem Version](https://badge.fury.io/rb/wait_until.png)](http://badge.fury.io/rb/wait_until)
 [![Build Status](https://travis-ci.org/MYOB-Technology/wait_until.png)](https://travis-ci.org/MYOB-Technology/wait_until)
+[![Gem Version](https://badge.fury.io/rb/wait_until.png)](http://badge.fury.io/rb/wait_until)
 
 Usage
 -----
