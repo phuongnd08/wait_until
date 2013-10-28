@@ -19,6 +19,12 @@ An alternative to the ```wait``` gem with a focus on readability via:
    Wait.until_false!("false is returned") { foo.falsey? }
 ```
 
+Status
+------
+
+[![Gem Version](https://badge.fury.io/rb/wait_until.png)](http://badge.fury.io/rb/wait_until)
+[![Build Status](https://travis-ci.org/MYOB-Technology/wait_until.png)](https://travis-ci.org/MYOB-Technology/wait_until)
+
 Usage
 -----
 
@@ -34,8 +40,3 @@ Requirements
 ------------
 
 * Ruby 1.9
-
-Build Status
-------------
-
-[![Build Status](https://travis-ci.org/MYOB-Technology/wait_until.png)](https://travis-ci.org/MYOB-Technology/wait_until)
