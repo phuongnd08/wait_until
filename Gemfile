@@ -1,11 +1,5 @@
 source 'http://rubygems.org'
 
-gemspec
+ruby '1.9.3'
 
-group :test do
-  gem 'rake', '~> 10.0.3'
-  gem 'rspec', '~> 2.12'
-  gem 'simplecov', '~> 0.7.1', require: false
-  gem 'flog', '~> 3.2.2'
-  gem 'travis-lint', '~> 1.6.0'
-end
+gemspec

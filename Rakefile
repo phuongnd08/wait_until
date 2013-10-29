@@ -1,9 +1,8 @@
 require 'bundler'
+require 'bundler/gem_tasks'
 require 'rspec/core/rake_task'
 
 directory "pkg"
-
-Bundler::GemHelper.install_tasks
 
 desc "Removed generated artefacts"
 task :clobber do
@@ -14,9 +13,7 @@ end
 
 desc "Complexity analysis"
 task :metrics do
-  print " Complexity Metrics ".center(80, "*") + "\n"
-  print `find lib -name \\*.rb | xargs flog --continue`
-  print "*" * 80+ "\n"
+  print `metric_fu --no-open`
 end
 
 desc "Exercises specifications"
