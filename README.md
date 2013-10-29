@@ -24,6 +24,7 @@ Status
 
 [![Build Status](https://travis-ci.org/MYOB-Technology/wait_until.png)](https://travis-ci.org/MYOB-Technology/wait_until)
 [![Gem Version](https://badge.fury.io/rb/wait_until.png)](http://badge.fury.io/rb/wait_until)
+[![Dependency Status](https://gemnasium.com/MYOB-Technology/wait_until.png)](https://gemnasium.com/MYOB-Technology/wait_until)
 
 Usage
 -----
