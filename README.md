@@ -19,6 +19,12 @@ An alternative to the ```wait``` gem with a focus on readability via:
    Wait.until_false!("false is returned") { foo.falsey? }
 ```
 
+* Optionally allowing a timeout per ```until``` method call:
+
+```ruby
+   Wait.until!("an exception does not occur", timeout_in_seconds: 10) { foo.re_try! }
+```
+
 Status
 ------
 

@@ -9,25 +9,49 @@ describe WaitUntil::Wait do
 
   describe ".until_true!" do
 
-    describe "when the block returns true" do
+    context "when the block returns true" do
+
+      let(:block) do
+        lambda { WaitUntil::Wait.until_true!("some operation") { true } }
+      end
 
       it "should execute without error" do
-        lambda { WaitUntil::Wait.until_true!("some operation") { true } }.should_not raise_error
+        block.should_not raise_error
       end
 
     end
 
-    describe "when the blocks always returns false" do
+    context "when the blocks always returns false" do
+
+      let(:timeout_in_seconds) { nil }
+      let(:block) do
+        lambda do
+          WaitUntil::Wait.until_true!("another operation finishes", timeout_in_seconds: timeout_in_seconds) { false }
+        end
+      end
 
       it "should raise an error indicating the operation timed-out" do
-        lambda do
-          WaitUntil::Wait.until_true!("another operation finishes") { false }
-        end.should raise_error(/Timed-out waiting until 'another operation finishes'/i)
+        block.should raise_error(/Timed-out waiting until 'another operation finishes'/i)
+      end
+
+      context "and a timeout is provided" do
+
+        let(:timeout_in_seconds) { 2 }
+
+        it "should wait until at least a period of time matching the timeout before raising an error" do
+          start_time = Time.now
+
+          block.should raise_error
+
+          period_of_time_waited = (Time.now - start_time)
+          period_of_time_waited.should be >= timeout_in_seconds
+        end
+
       end
 
     end
 
-    describe "when the block eventually returns true" do
+    context "when the block eventually returns true" do
 
       it "should execute without error" do
         invocation_count = 0
@@ -45,25 +69,49 @@ describe WaitUntil::Wait do
 
   describe ".until_false!" do
 
-    describe "when the block returns false" do
+    context "when the block returns false" do
+
+      let(:block) do
+        lambda { WaitUntil::Wait.until_false!("some operation") { false } }
+      end
 
       it "should execute without error" do
-        lambda { WaitUntil::Wait.until_false!("some operation") { false } }.should_not raise_error
+        block.should_not raise_error
       end
 
     end
 
-    describe "when the blocks always returns true" do
+    context "when the blocks always returns true" do
+
+      let(:timeout_in_seconds) { nil }
+      let(:block) do
+        lambda do
+          WaitUntil::Wait.until_false!("another operation finishes", timeout_in_seconds: timeout_in_seconds) { true }
+        end
+      end
 
       it "should raise an error indicating the operation timed-out" do
-        lambda do
-          WaitUntil::Wait.until_false!("another operation finishes") { true }
-        end.should raise_error(/Timed-out waiting until 'another operation finishes'/i)
+        block.should raise_error(/Timed-out waiting until 'another operation finishes'/i)
+      end
+
+      context "and a timeout is provided" do
+
+        let(:timeout_in_seconds) { 2 }
+
+        it "should wait until at least a period of time matching the timeout before raising an error" do
+          start_time = Time.now
+
+          block.should raise_error
+
+          period_of_time_waited = (Time.now - start_time)
+          period_of_time_waited.should be >= timeout_in_seconds
+        end
+
       end
 
     end
 
-    describe "when the block eventually returns false" do
+    context "when the block eventually returns false" do
 
       it "should execute without error" do
         invocation_count = 0
@@ -81,27 +129,51 @@ describe WaitUntil::Wait do
 
   describe ".until!" do
 
-    describe "when the block executes without error" do
+    context "when the block executes without error" do
+
+      let(:block) do
+        lambda { WaitUntil::Wait.until!("some operation") { } }
+      end
 
       it "should execute without error" do
-        lambda { WaitUntil::Wait.until!("some operation") { } }.should_not raise_error
+        block.should_not raise_error
       end
 
     end
 
-    describe "when the block raises an error indefinitely" do
+    context "when the block raises an error indefinitely" do
 
-      it "should raise an error indicating the operation timed-out" do
+      let(:timeout_in_seconds) { nil }
+      let(:block) do
         lambda do
-          WaitUntil::Wait.until!("some operation finishes") do
+          WaitUntil::Wait.until!("some operation finishes", timeout_in_seconds: timeout_in_seconds) do
             raise "forced error"
           end
-        end.should raise_error(/Timed-out waiting until 'some operation finishes'/i)
+        end
+      end
+
+      it "should raise an error indicating the operation timed-out" do
+        block.should raise_error(/Timed-out waiting until 'some operation finishes'/i)
+      end
+
+      context "and a timeout is provided" do
+
+        let(:timeout_in_seconds) { 2 }
+
+        it "should wait until at least a period of time matching the timeout before raising an error" do
+          start_time = Time.now
+
+          block.should raise_error
+
+          period_of_time_waited = (Time.now - start_time)
+          period_of_time_waited.should be >= timeout_in_seconds
+        end
+
       end
 
     end
 
-    describe "when the block eventually executes without error" do
+    context "when the block eventually executes without error" do
 
       it "should execute without error" do
         invocation_count = 0
