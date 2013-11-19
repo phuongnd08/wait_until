@@ -1,4 +1,6 @@
-require 'simplecov'
+require 'bundler'
+Bundler.require(:development)
+
 SimpleCov.start do
   add_filter "/spec/"
   add_filter "/vendor/"
