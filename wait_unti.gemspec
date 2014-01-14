@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = ">= 1.9.3"
 
-  s.add_development_dependency "metric_fu", "~> 4.5"
+  s.add_development_dependency "metric_fu", "~> 4.7"
   s.add_development_dependency "rspec", "~> 2.14"
   s.add_development_dependency "rake", "~> 10.1"
   s.add_development_dependency "simplecov", "~> 0.8"
