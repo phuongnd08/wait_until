@@ -46,4 +46,4 @@ Usage
 Requirements
 ------------
 
-* Ruby 1.9.3 or 2.0
+* Ruby 1.9.3, 2.0 or 2.1
