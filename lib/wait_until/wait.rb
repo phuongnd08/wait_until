@@ -1,4 +1,5 @@
 module WaitUntil
+
   class Wait
 
     class << self
@@ -40,4 +41,5 @@ module WaitUntil
     self.default_timeout_in_seconds = ENV["timeout"] ? ENV["timeout"].to_i : 20
 
   end
+
 end

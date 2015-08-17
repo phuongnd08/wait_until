@@ -41,7 +41,7 @@ describe WaitUntil::Wait do
         it "waits until at least a period of time matching the timeout before raising an error" do
           start_time = Time.now
 
-          expect(block).to raise_error
+          expect(block).to raise_error(/Timed-out/)
 
           period_of_time_waited = (Time.now - start_time)
           expect(period_of_time_waited).to be >= timeout_in_seconds
@@ -101,7 +101,7 @@ describe WaitUntil::Wait do
         it "waits until at least a period of time matching the timeout before raising an error" do
           start_time = Time.now
 
-          expect(block).to raise_error
+          expect(block).to raise_error(/Timed-out/)
 
           period_of_time_waited = (Time.now - start_time)
           expect(period_of_time_waited).to be >= timeout_in_seconds
@@ -163,7 +163,7 @@ describe WaitUntil::Wait do
         it "waits until at least a period of time matching the timeout before raising an error" do
           start_time = Time.now
 
-          expect(block).to raise_error
+          expect(block).to raise_error(/Timed-out/)
 
           period_of_time_waited = (Time.now - start_time)
           expect(period_of_time_waited).to be >= timeout_in_seconds
