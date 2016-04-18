@@ -3,13 +3,6 @@ describe WaitUntil::Wait do
   let(:description) { "some operations description" }
   let(:options)     { {} }
 
-  before(:context) do
-    @initial_default_timeout = WaitUntil::Wait.default_timeout_in_seconds
-    WaitUntil::Wait.default_timeout_in_seconds = 1
-  end
-
-  after(:context) { WaitUntil::Wait.default_timeout_in_seconds = @initial_default_timeout }
-
   shared_examples_for "a wait method that times-out" do
 
     it "raises an error indicating the operation timed-out" do

@@ -25,6 +25,12 @@ An alternative to the ```wait``` gem with a focus on readability via:
    Wait.until!("an exception does not occur", timeout_in_seconds: 10) { foo.re_try! }
 ```
 
+* Optionally performing diagnostics when a timeout occurs:
+
+```ruby
+   Wait.until!("resource contains something", on_failure: logger.log(resource.contents)) { resource.contains?("foo") }
+```
+
 Status
 ------
 

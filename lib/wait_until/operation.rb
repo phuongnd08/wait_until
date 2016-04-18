@@ -5,14 +5,14 @@ module WaitUntil
     def initialize(description, options)
       @description        = description
       @timeout_in_seconds = options[:timeout_in_seconds] || ::WaitUntil::Wait.default_timeout_in_seconds
+      @on_failure         = options[:on_failure]
     end
 
     def eventually_true?(&block)
-      start_time = Time.now
+      @start_time = Time.now
       loop do
         return true if true?(&block)
-        elapsed_time = Time.now - start_time
-        return false if elapsed_time >= @timeout_in_seconds
+        return false if timed_out?
       end
     end
 
@@ -31,6 +31,13 @@ module WaitUntil
         @last_error = error
         false
       end
+    end
+
+    def timed_out?
+      elapsed_time = Time.now - @start_time
+      is_timed_out = elapsed_time >= @timeout_in_seconds
+      @on_failure.call if @on_failure if is_timed_out
+      is_timed_out
     end
 
   end

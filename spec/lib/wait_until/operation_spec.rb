@@ -8,9 +8,8 @@ describe WaitUntil::Operation do
 
   end
 
-  let(:description)        { "some operations description" }
-  let(:timeout_in_seconds) { 1 }
-  let(:options)            { { timeout_in_seconds: timeout_in_seconds } }
+  let(:description) { "some operations description" }
+  let(:options)     { {} }
 
   let(:operation) { described_class.new(description, options) }
 
@@ -38,6 +37,19 @@ describe WaitUntil::Operation do
         expect(subject).to be(false)
       end
 
+      context "and no timeout is provided" do
+
+        it "waits until at least the default period of time before returning false" do
+          start_time = Time.now
+
+          subject
+
+          period_of_time_waited = (Time.now - start_time)
+          expect(period_of_time_waited).to be >= WaitUntil::Wait.default_timeout_in_seconds
+        end
+
+      end
+
       context "and a timeout is provided" do
 
         let(:timeout_in_seconds) { 2 }
@@ -50,6 +62,19 @@ describe WaitUntil::Operation do
 
           period_of_time_waited = (Time.now - start_time)
           expect(period_of_time_waited).to be >= timeout_in_seconds
+        end
+
+      end
+
+      context "and a failure callback is provided" do
+
+        let(:on_failure_callback) { lambda { InvocationData.counter += 1 } }
+        let(:options)             { { on_failure: on_failure_callback } }
+
+        it "executes the callback once" do
+          subject
+
+          expect(InvocationData.counter).to eql(1)
         end
 
       end
