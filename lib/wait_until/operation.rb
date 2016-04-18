@@ -2,10 +2,11 @@ module WaitUntil
 
   class Operation
 
-    def initialize(description, options)
-      @description        = description
-      @timeout_in_seconds = options[:timeout_in_seconds] || ::WaitUntil::Wait.default_timeout_in_seconds
-      @on_failure         = options[:on_failure]
+    def initialize(args)
+      @timeout_in_seconds = args[:timeout_in_seconds] || ::WaitUntil::Wait.default_timeout_in_seconds
+      @description        = args[:description]
+      @failure_message    = args[:failure_message]
+      @on_failure         = args[:on_failure]
     end
 
     def eventually_true?(&block)
@@ -17,8 +18,10 @@ module WaitUntil
     end
 
     def failure_message
-      message = "Timed-out waiting until '#{@description}'"
-      message << ".  Last observed exception: #{@last_error}" if @last_error
+      message = @failure_message
+      message ||= "Timed-out waiting until '#{@description}'"  if @description
+      message ||= "Timed-out waiting until operation completed"
+      message << "\nLast observed exception: #{@last_error}" if @last_error
       message
     end
 

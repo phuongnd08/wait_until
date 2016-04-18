@@ -8,10 +8,9 @@ describe WaitUntil::Operation do
 
   end
 
-  let(:description) { "some operations description" }
-  let(:options)     { {} }
+  let(:args) { {} }
 
-  let(:operation) { described_class.new(description, options) }
+  let(:operation) { described_class.new(args) }
 
   before(:example) { InvocationData.counter = 0 }
 
@@ -53,7 +52,7 @@ describe WaitUntil::Operation do
       context "and a timeout is provided" do
 
         let(:timeout_in_seconds) { 2 }
-        let(:options)            { { timeout_in_seconds: timeout_in_seconds } }
+        let(:args)               { { timeout_in_seconds: timeout_in_seconds } }
 
         it "waits until at least that period of time before returning false" do
           start_time = Time.now
@@ -69,7 +68,7 @@ describe WaitUntil::Operation do
       context "and a failure callback is provided" do
 
         let(:on_failure_callback) { lambda { InvocationData.counter += 1 } }
-        let(:options)             { { on_failure: on_failure_callback } }
+        let(:args)                { { on_failure: on_failure_callback } }
 
         it "executes the callback once" do
           subject
@@ -106,12 +105,53 @@ describe WaitUntil::Operation do
 
     shared_examples_for "a standard failure message" do
 
-      it "indicates a time-out occurred" do
-        expect(subject).to include("Timed-out")
+      context "and a custom failure message was provided" do
+
+        let(:failure_message) { "some failure message" }
+        let(:args)            { { failure_message: failure_message } }
+
+        it "contains the failure message" do
+          expect(subject).to include(failure_message)
+        end
+
+        context "and an operation description was provided" do
+
+          let(:description) { "some operation description" }
+          let(:args)        { { failure_message: failure_message, description: description } }
+
+          it "contains the failure message" do
+            expect(subject).to include(failure_message)
+          end
+
+          it "excludes the description" do
+            expect(subject).to_not include(description)
+          end
+
+        end
+
       end
 
-      it "contains the operations description" do
-        expect(subject).to include(description)
+      context "and an operation description was provided" do
+
+        let(:description) { "some operation description" }
+        let(:args)        { { description: description } }
+
+        it "indicates a time-out occurred" do
+          expect(subject).to include("Timed-out")
+        end
+
+        it "contains the description" do
+          expect(subject).to include(description)
+        end
+
+      end
+
+      context "and no failure message or description was provided" do
+
+        it "indicates a time-out occurred" do
+          expect(subject).to include("Timed-out")
+        end
+
       end
 
     end

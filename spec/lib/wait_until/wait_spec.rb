@@ -1,26 +1,46 @@
 describe WaitUntil::Wait do
 
-  let(:description) { "some operations description" }
-  let(:options)     { {} }
+  let(:block) { lambda { "some block" } }
+  let(:args)  { {} }
 
-  shared_examples_for "a wait method that times-out" do
+  shared_examples_for "a wait method that uses an operation to determine if it eventually succeeds" do
 
-    it "raises an error indicating the operation timed-out" do
-      expect(subject).to raise_error(/Timed-out waiting until '#{description}'/i)
+    let(:eventually_true_flag) { true }
+    let(:failure_message)      { "some failure message" }
+    let(:operation)            do
+      instance_double(WaitUntil::Operation, eventually_true?: eventually_true_flag, failure_message: failure_message)
     end
 
-    context "and a timeout is provided" do
+    before(:example) { allow(WaitUntil::Operation).to receive(:new).and_return(operation) }
 
-      let(:timeout_in_seconds) { 2 }
-      let(:options)            { { timeout_in_seconds: timeout_in_seconds } }
+    it "creates an operation representing the call" do
+      expect(WaitUntil::Operation).to receive(:new).with(args)
 
-      it "waits until at least that period of time before raising an error" do
-        start_time = Time.now
+      subject
+    end
 
-        subject.call rescue nil
+    it "determines if the operation eventually returns true" do
+      expect(operation).to receive(:eventually_true?)
 
-        period_of_time_waited = (Time.now - start_time)
-        expect(period_of_time_waited).to be >= timeout_in_seconds
+      subject
+    end
+
+    context "when the operation is eventually true" do
+
+      let(:eventually_true_flag) { true }
+
+      it "executes without error" do
+        expect(lambda { subject }).to_not raise_error
+      end
+
+    end
+
+    context "when the operation is never eventually true" do
+
+      let(:eventually_true_flag) { false }
+
+      it "raises an error with the operations failure message" do
+        expect(lambda { subject }).to raise_error(failure_message)
       end
 
     end
@@ -29,38 +49,26 @@ describe WaitUntil::Wait do
 
   describe "::until_true!" do
 
-    subject { lambda { described_class.until_true!(description, options, &block) } }
+    subject { described_class.until_true!(args, &block) }
+
+    it_behaves_like "a wait method that uses an operation to determine if it eventually succeeds"
 
     context "when the block returns true" do
 
       let(:block) { lambda { true } }
 
       it "executes without error" do
-        expect(subject).to_not raise_error
+        expect(lambda { subject }).to_not raise_error
       end
 
     end
 
-    context "when the blocks always returns false" do
+    context "when the block returns false" do
 
       let(:block) { lambda { false } }
 
-      it_behaves_like "a wait method that times-out"
-
-    end
-
-    context "when the block eventually returns true" do
-
-      let(:block) do
-        invocation_count = 0
-        lambda do
-          invocation_count += 1
-          invocation_count == 3
-        end
-      end
-
-      it "executes without error" do
-        expect(subject).to_not raise_error
+      it "raises an error" do
+        expect(lambda { subject }).to raise_error(/timed-out/i)
       end
 
     end
@@ -69,38 +77,26 @@ describe WaitUntil::Wait do
 
   describe "::until_false!" do
 
-    subject { lambda { described_class.until_false!(description, options, &block) } }
+    subject { described_class.until_false!(args, &block) }
+
+    it_behaves_like "a wait method that uses an operation to determine if it eventually succeeds"
 
     context "when the block returns false" do
 
       let(:block) { lambda { false } }
 
       it "executes without error" do
-        expect(subject).to_not raise_error
+        expect(lambda { subject }).to_not raise_error
       end
 
     end
 
-    context "when the blocks always returns true" do
+    context "when the block returns true" do
 
       let(:block) { lambda { true } }
 
-      it_behaves_like "a wait method that times-out"
-
-    end
-
-    context "when the block eventually returns false" do
-
-      let(:block) do
-        invocation_count = 0
-        lambda do
-          invocation_count += 1
-          invocation_count < 3
-        end
-      end
-
-      it "executes without error" do
-        expect(subject).to_not raise_error
+      it "raises an error" do
+        expect(lambda { subject }).to raise_error(/timed-out/i)
       end
 
     end
@@ -109,38 +105,26 @@ describe WaitUntil::Wait do
 
   describe "::until!" do
 
-    subject { lambda { described_class.until!(description, options, &block) } }
+    subject { described_class.until!(args, &block) }
+
+    it_behaves_like "a wait method that uses an operation to determine if it eventually succeeds"
 
     context "when the block executes without error" do
 
-      let(:block) { lambda { nil } }
+      let(:block) { lambda { "does not raise an error" } }
 
       it "executes without error" do
-        expect(subject).to_not raise_error
+        expect(lambda { subject }).to_not raise_error
       end
 
     end
 
-    context "when the block raises an error indefinitely" do
+    context "when the block raises an error" do
 
-      let(:block) { lambda { raise "Forced Error" } }
+      let(:block) { lambda { raise "forced error" } }
 
-      it_behaves_like "a wait method that times-out"
-
-    end
-
-    context "when the block eventually executes without error" do
-
-      let(:block) do
-        invocation_count = 0
-        lambda do
-          invocation_count += 1
-          raise "Forced Error" if invocation_count < 3
-        end
-      end
-
-      it "executes without error" do
-        expect(subject).to_not raise_error
+      it "raises an error" do
+        expect(lambda { subject }).to raise_error(/timed-out/i)
       end
 
     end
