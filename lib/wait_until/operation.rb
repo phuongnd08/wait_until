@@ -28,18 +28,16 @@ module WaitUntil
     private
 
     def true?(&block)
-      begin
-        !!block.call
-      rescue => error
-        @last_error = error
-        false
-      end
+      !!block.call
+    rescue StandardError => error
+      @last_error = error
+      false
     end
 
     def timed_out?
       elapsed_time = Time.now - @start_time
       is_timed_out = elapsed_time >= @timeout_in_seconds
-      @on_failure.call if @on_failure if is_timed_out
+      @on_failure.call if @on_failure && is_timed_out
       is_timed_out
     end
 

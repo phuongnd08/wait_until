@@ -1,0 +1,66 @@
+AllCops:
+  Exclude:
+    - wait_until.gemspec
+    - Rakefile
+    - spec/**/*
+    - vendor/**/*
+  TargetRubyVersion: 2.3
+
+# defer Ruby 3.0 support
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# double quotes preferred, except in require
+Style/StringLiterals:
+  Enabled: false
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: double_quotes
+
+# appropriate hash formatting varies wildly
+Layout/MultilineMethodCallBraceLayout:
+  Enabled: false
+Layout/AlignHash:
+  Enabled: false
+
+# aids readability
+Style/RedundantSelf:
+  Enabled: false
+Layout/ExtraSpacing:
+  Enabled: false
+Layout/SpaceInsideArrayLiteralBrackets:
+  Enabled: false
+Layout/SpaceInsidePercentLiteralDelimiters:
+  Enabled: false
+Layout/SpaceAroundEqualsInParameterDefault:
+  Enabled: false
+Style/SingleLineBlockParams:
+  Enabled: false
+Style/DoubleNegation:
+  Enabled: false
+Style/Alias:
+  Enabled: false
+Layout/EmptyLinesAroundClassBody:
+  Enabled: false
+Layout/EmptyLinesAroundModuleBody:
+  Enabled: false
+Layout/IndentAssignment:
+  Enabled: false
+Naming/RescuedExceptionsVariableName:
+  PreferredName: 'error'
+
+# sufficient length for modern screens
+Metrics/LineLength:
+  Max: 120
+
+# {} distinguishes delimiters from method calls
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    '%w': '{}'
+
+# self-documentation preferred
+Style/Documentation:
+  Enabled: false
+
+# conditionals should contain statements
+Style/EmptyElse:
+  EnforcedStyle: empty

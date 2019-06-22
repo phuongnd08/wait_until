@@ -1,3 +1,12 @@
+** 0.4.0 **
+
+Breaking:
+* Dropped <= Ruby 2.2 support (official language supported has ended)
+
+Misc:
+* Dependency update
+* Added static code analysis enforcement
+
 ** 0.3.0 **
 
 Breaking:

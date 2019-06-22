@@ -1,27 +1,27 @@
-# -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
+$:.push File.expand_path("lib", __dir__)
 require "wait_until/version"
 
-Gem::Specification.new do |s|
-  s.name = "wait_until"
-  s.version = ::WaitUntil::VERSION
-  s.platform = Gem::Platform::RUBY
-  s.authors = ["Matthew Ueckerman"]
-  s.summary = %q{Suspends execution until state changes via ::Wait.until! methods}
-  s.description = %q{Suspends execution until state changes via ::Wait.until! methods, timing-out after a configured period of time}
-  s.email = %q{matthew.ueckerman@myob.com}
-  s.homepage = "http://github.com/MYOB-Technology/wait_until"
-  s.rubyforge_project = "wait_until"
-  s.license = "MIT"
+Gem::Specification.new do |spec|
+  spec.name = "wait_until"
+  spec.version = ::WaitUntil::VERSION
+  spec.platform = Gem::Platform::RUBY
+  spec.authors = [ "Matthew Ueckerman" ]
+  spec.summary = %q{Suspends execution until state changes via ::Wait.until! methods}
+  spec.description = %q{Suspends execution until state changes via ::Wait.until! methods, timing-out after a configured period of time}
+  spec.email = %q{matthew.ueckerman@myob.com}
+  spec.homepage = "http://github.com/MYOB-Technology/wait_until"
+  spec.rubyforge_project = "wait_until"
+  spec.license = "MIT"
 
-  s.files        = Dir.glob("./lib/**/*")
-  s.test_files   = Dir.glob("./spec/**/*")
-  s.require_path = "lib"
+  spec.files        = Dir.glob("./lib/**/*")
+  spec.test_files   = Dir.glob("./spec/**/*")
+  spec.require_path = "lib"
 
-  s.required_ruby_version = ">= 1.9.3"
+  spec.required_ruby_version = ">= 2.3"
 
-  s.add_development_dependency "travis-lint", "~> 2.0"
-  s.add_development_dependency "rspec",       "~> 3.4"
-  s.add_development_dependency "rake",        "~> 11.1"
-  s.add_development_dependency "simplecov",   "~> 0.11"
+  spec.add_development_dependency "rubocop",     "~> 0.71"
+  spec.add_development_dependency "rspec",       "~> 3.8"
+  spec.add_development_dependency "rake",        "~> 12.3"
+  spec.add_development_dependency "simplecov",   "~> 0.11"
+  spec.add_development_dependency "travis-lint", "~> 2.0"
 end

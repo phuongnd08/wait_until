@@ -1,5 +1,5 @@
 wait_until
-============
+==========
 
 Suspends execution until state changes via ```::Wait.until!``` methods.
 
@@ -64,5 +64,5 @@ Usage
 Requirements
 ------------
 
-* Ruby 1.9.3, 2.0 or 2.1
+* >= Ruby 2.2
 * JRuby is supported
