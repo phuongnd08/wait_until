@@ -56,7 +56,7 @@ DEPENDENCIES
   rake (~> 12.3)
   rspec (~> 3.8)
   rubocop (~> 0.71)
-  simplecov (~> 0.11)
+  simplecov (~> 0.16)
   travis-lint (~> 2.0)
   wait_until!
 

@@ -1,0 +1,2 @@
+# Required for code coverage
+debug.fullTrace = true
