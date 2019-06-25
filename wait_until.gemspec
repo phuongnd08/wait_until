@@ -5,7 +5,7 @@ Gem::Specification.new do |spec|
   spec.name = "wait_until"
   spec.version = ::WaitUntil::VERSION
   spec.platform = Gem::Platform::RUBY
-  spec.authors = [ "Matthew Ueckerman" ]
+  spec.authors = %w{ dueckes }
   spec.summary = %q{Suspends execution until state changes via ::Wait.until! methods}
   spec.description = %q{Suspends execution until state changes via ::Wait.until! methods, timing-out after a configured period of time}
   spec.email = %q{matthew.ueckerman@myob.com}
