@@ -48,6 +48,8 @@ Status
 
 [![Build Status](https://travis-ci.org/MYOB-Technology/wait_until.png)](https://travis-ci.org/MYOB-Technology/wait_until)
 [![Gem Version](https://badge.fury.io/rb/wait_until.png)](http://badge.fury.io/rb/wait_until)
+[![Code Climate](https://codeclimate.com/github/MYOB-Technology/wait_until/badges/gpa.svg)](https://codeclimate.com/github/MYOB-Technology/wait_until)
+[![Test Coverage](https://codeclimate.com/github/MYOB-Technology/wait_until/badges/coverage.svg)](https://codeclimate.com/github/MYOB-Technology/wait_until/coverage)
 
 Usage
 -----
