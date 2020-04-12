@@ -15,7 +15,7 @@ module WaitUntil
         until_true!(args) { !block.call }
       end
 
-      def until!(args={}, &block)
+      def until_no_errors!(args={}, &block)
         until_true!(args) do
           block.call
           true

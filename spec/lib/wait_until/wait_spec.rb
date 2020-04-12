@@ -103,9 +103,9 @@ describe WaitUntil::Wait do
 
   end
 
-  describe "::until!" do
+  describe "::until_no_errors!" do
 
-    subject { described_class.until!(args, &block) }
+    subject { described_class.until_no_errors!(args, &block) }
 
     it_behaves_like "a wait method that uses an operation to determine if it eventually succeeds"
 

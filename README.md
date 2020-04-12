@@ -1,7 +1,7 @@
 wait_until
 ==========
 
-Suspends execution until state changes via ```::Wait.until!``` methods.
+Suspends execution until state changes via ```::Wait.until_no_errors!``` methods.
 
 An alternative to the ```wait``` gem with a focus on readability via:
 
@@ -14,7 +14,7 @@ An alternative to the ```wait``` gem with a focus on readability via:
 * Providing alternate ```until``` methods:
 
 ```ruby
-   Wait.until! { foo.re_try! }
+   Wait.until_no_errors! { foo.re_try! }
    Wait.until_true! { foo.truthy? }
    Wait.until_false! { foo.falsey? }
 ```
@@ -22,25 +22,25 @@ An alternative to the ```wait``` gem with a focus on readability via:
 * Optionally allowing a timeout per ```until``` method call:
 
 ```ruby
-   Wait.until!(timeout_in_seconds: 10) { foo.re_try! }
+   Wait.until_no_errors!(timeout_in_seconds: 10) { foo.re_try! }
 ```
 
 * Optionally allowing a description of the operation being polled, which is included in the failure message:
 
 ```ruby
-   Wait.until!(description: "an exception does not occur") { foo.re_try! }
+   Wait.until_no_errors!(description: "an exception does not occur") { foo.re_try! }
 ```
 
 * Optionally allowing explicit provision of the failure message when a timeout occurs:
 
 ```ruby
-   Wait.until!(failure_message: "retry attempts were unsuccessful") { foo.re_try! }
+   Wait.until_no_errors!(failure_message: "retry attempts were unsuccessful") { foo.re_try! }
 ```
 
 * Optionally performing diagnostics when a timeout occurs:
 
 ```ruby
-   Wait.until!(on_failure: lambda { logger.log(resource.contents) }) { resource.contains?("foo") }
+   Wait.until_no_errors!(on_failure: lambda { logger.log(resource.contents) }) { resource.contains?("foo") }
 ```
 
 Status
